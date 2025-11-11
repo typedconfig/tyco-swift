@@ -26,6 +26,23 @@ Add the package as a dependency and use:
 ```swift
 import TycoSwift
 
-let data = try Tyco.loadFile("../tyco-test-suite/inputs/simple1.tyco")
-print(data)
+// Parse a Tyco configuration file
+let context = try Tyco.loadFile("config.tyco")
+
+// Access global configuration values
+let globals = context["globals"] as? [String: Any]
+let environment = globals?["environment"]
+let debug = globals?["debug"]
+let timeout = globals?["timeout"]
+
+// Get all instances as arrays
+let objects = context["objects"] as? [String: Any]
+let databases = objects?["Database"] as? [[String: Any]]
+let servers = objects?["Server"] as? [[String: Any]]
+
+// Access individual instance fields
+if let primaryDb = databases?.first {
+   let dbHost = primaryDb["host"]
+   let dbPort = primaryDb["port"]
+}
 ```
