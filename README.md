@@ -19,25 +19,32 @@ cd tyco-swift
 swift test
 ```
 
-### Usage
+## Quick Start
 
-Add the package as a dependency and use:
+This package includes a ready-to-use example Tyco file at:
+
+   example.tyco
+
+([View on GitHub](https://github.com/typedconfig/tyco-swift/blob/main/example.tyco))
+
+You can load and parse this file using the Swift Tyco API. Example usage:
 
 ```swift
 import TycoSwift
 
-// Parse a Tyco configuration file
-let context = try Tyco.loadFile("config.tyco")
+// Parse the bundled example.tyco file
+let context = try Tyco.loadFile("example.tyco")
 
 // Access global configuration values
 let globals = context["globals"] as? [String: Any]
 let environment = globals?["environment"]
 let debug = globals?["debug"]
 let timeout = globals?["timeout"]
+print("env=\(environment ?? "") debug=\(debug ?? false) timeout=\(timeout ?? 0)")
+// ... access objects, etc ...
+```
 
-// Get all instances as arrays
-let objects = context["objects"] as? [String: Any]
-let databases = objects?["Database"] as? [[String: Any]]
+See the [example.tyco](https://github.com/typedconfig/tyco-swift/blob/main/example.tyco) file for the full configuration example.
 let servers = objects?["Server"] as? [[String: Any]]
 
 // Access individual instance fields
